@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypeScript Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>TypeScript Quiz</h1>
+        <div class="question-container">
+            <div id="question">Question text will appear here.</div>
+            <ul id="options">
+                <!-- Options will appear here -->
+            </ul>
+        </div>
+        <button id="back" onclick="previousQuestion()">Back</button>
+        <button id="submit" onclick="checkAnswer()">Submit</button>
+        <div id="result"></div>
+        <button id="next" onclick="nextQuestion()">Next Question</button>
+        <button id="copy-link" onclick="copyLink()">Copy Share Link</button>
+        <input type="text" id="share-link" value="https://yourusername.github.io/typescript-quiz/" readonly style="display: none;">
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
