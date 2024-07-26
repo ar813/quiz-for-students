@@ -17,6 +17,12 @@ body {
     text-align: center;
 }
 
+.status-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
 .question-container {
     margin-bottom: 20px;
 }
@@ -65,4 +71,18 @@ button:hover {
 
 #copy-link:hover {
     background-color: #218838;
+}
+
+#timer, #progress, #score {
+    margin: 10px 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#generate-pdf {
+    background-color: #ff5733;
+}
+
+#generate-pdf:hover {
+    background-color: #c70039;
 }
