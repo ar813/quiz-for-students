@@ -162,55 +162,76 @@ function updateScore() {
     document.getElementById('current-score').textContent = score;
 }
 
-function copyLink() {
-    const copyText = document.getElementById('share-link');
-    copyText.style.display = 'block';
-    copyText.select();
-    copyText.setSelectionRange(0, 99999); // For mobile devices
-    document.execCommand("copy");
-    copyText.style.display = 'none';
-    alert("Link copied to clipboard: " + copyText.value);
-}
-
 function generatePDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
+    let y = 30; // Y position for text
+
     // Title
-    doc.setFontSize(18);
+    doc.setFontSize(24);
     doc.setFont("Arial", "bold");
+    doc.setTextColor(0, 51, 102); // Dark blue color
     doc.text("TypeScript Quiz Results", 20, 20);
 
-    // Reset font for content
+    y += 10; // Spacing after question
+
+
+    // Set general font for content
     doc.setFontSize(12);
     doc.setFont("Arial", "normal");
+    doc.setTextColor(0, 0, 0); // Black color
 
-    let y = 30; // Y position for text
+
+    // Define margins
+    const marginLeft = 20;
+    const marginRight = 20;
+    const contentWidth = 170; // Page width minus margins
+
+    // Add border style for the content area
+    const borderColor = [0, 51, 102]; // Dark blue
+    const fillColor = [245, 245, 245]; // Light gray background
 
     // Loop through user answers and add them to the PDF
     userAnswers.forEach((answer, index) => {
-        doc.setFontSize(12);
-        // doc.text(Question ${index + 1}:, 20, y);
-        y += 10; // Spacing
+        // Draw question background
+        doc.setDrawColor(...borderColor);
+        doc.setFillColor(...fillColor);
+        doc.rect(marginLeft, y - 10, contentWidth, 20, 'F'); // Background with padding
 
+        // Add question text
+        doc.setTextColor(...borderColor);
         doc.setFont("Arial", "bold");
-        doc.text(`Q${index + 1}: ${answer.question}`, 20, y);
-        y += 10; // Spacing
+        doc.text(`Q${index + 1}: ${answer.question}`, marginLeft + 2, y);
 
+        y += 20; // Spacing after question
+
+        // Add answer text
         doc.setFont("Arial", "normal");
-        doc.text(`Your Answer: ${answer.selected}`, 20, y);
-        y += 10; // Spacing
+        doc.setTextColor(0, 0, 0); // Black color
+        doc.text(`Your Answer: ${answer.selected}`, marginLeft, y);
+        y += 10;
 
-        doc.text(`Is Correct: ${answer.correct ? "Yes" : "No"}`, 20, y);
-        y += 15; // Extra spacing after each question
+        doc.text(`Is Correct: ${answer.correct ? "Yes" : "No"}`, marginLeft, y);
+        y += 20; // Extra spacing after each question
     });
 
-    // Add a summary
+    // Add summary
+    y += 10; // Spacing before summary
     doc.setFont("Arial", "bold");
-    doc.text(`Total Score: ${score} out of ${questions.length}`, 20, y);
+    doc.setTextColor(0, 51, 102); // Dark blue color
+    doc.text(`Total Score: ${score} out of ${questions.length}`, marginLeft, y);
+
+    // Add footer
+    y += 10; // Spacing before footer
+    doc.setFontSize(10);
+    doc.setFont("Arial", "italic");
+    doc.setTextColor(100, 100, 100); // Gray color
+    doc.text("Thank you for taking the quiz!", marginLeft, y);
 
     // Save the PDF
     doc.save("quiz_results.pdf");
 }
+
 
 window.onload = loadQuestion;

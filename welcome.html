@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index</title>
+    <title>Welcome</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -36,19 +36,33 @@
             border-radius: 4px;
             cursor: pointer;
             margin: 5px;
-            width: 100%;
         }
 
         button:hover {
             background-color: #0056b3;
+        }
+
+        p {
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Welcome</h1>
-        <button onclick="window.location.href='sign-up.html'">Sign Up</button>
-        <button onclick="window.location.href='log-in.html'">Log In</button>
+        <p>Welcome to the quiz application!</p>
+        <a href="quiz.html"><button onclick="startQuiz()">Start Quiz</button></a>
+        <button onclick="logOut()">Log Out</button>
     </div>
+    <script>
+        function startQuiz() {
+            window.location.href = 'quiz.html'; // Redirect to Quiz page
+        }
+
+        function logOut() {
+            localStorage.removeItem('user');
+            window.location.href = 'log-in.html'; // Redirect to Log In page
+        }
+    </script>
 </body>
 </html>
