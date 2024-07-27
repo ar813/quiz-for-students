@@ -1,53 +1,106 @@
 const questions = [
     {
-        question: "What is TypeScript?",
+        question: "Which of the following is a correct sentence?",
         options: [
-            "A programming language",
-            "A superset of JavaScript",
-            "A type of coffee",
-            "A CSS framework"
+            "She don't like apples.",
+            "She doesn't like apples.",
+            "She don't likes apples.",
+            "She doesn't likes apples."
         ],
-        correctAnswer: "A superset of JavaScript"
+        correctAnswer: "She doesn't like apples."
     },
     {
-        question: "Which company developed TypeScript?",
+        question: "What is the past tense of 'go'?",
         options: [
-            "Google",
-            "Microsoft",
-            "Facebook",
-            "Apple"
+            "Go",
+            "Goes",
+            "Went",
+            "Going"
         ],
-        correctAnswer: "Microsoft"
+        correctAnswer: "Went"
     },
     {
-        question: "What file extension is used for TypeScript files?",
+        question: "Which word is a noun?",
         options: [
-            ".java",
-            ".ts",
-            ".py",
-            ".js"
+            "Quickly",
+            "Happily",
+            "Dog",
+            "Beautiful"
         ],
-        correctAnswer: ".ts"
+        correctAnswer: "Dog"
     },
     {
-        question: "Which of the following is a feature of TypeScript?",
+        question: "Choose the correct form of the verb: 'She _____ to the store yesterday.'",
         options: [
-            "Dynamic Typing",
-            "Strong Typing",
-            "No Typing",
-            "Weak Typing"
+            "goes",
+            "going",
+            "went",
+            "gone"
         ],
-        correctAnswer: "Strong Typing"
+        correctAnswer: "went"
     },
     {
-        question: "Can TypeScript code be directly executed in the browser?",
+        question: "Which sentence is in the passive voice?",
         options: [
-            "Yes",
-            "No"
+            "The teacher teaches the lesson.",
+            "The lesson is taught by the teacher.",
+            "The teacher is teaching the lesson.",
+            "The lesson was taught by the teacher."
         ],
-        correctAnswer: "No"
+        correctAnswer: "The lesson is taught by the teacher."
+    },
+    {
+        question: "What is the correct comparative form of 'good'?",
+        options: [
+            "Gooder",
+            "More good",
+            "Best",
+            "Better"
+        ],
+        correctAnswer: "Better"
+    },
+    {
+        question: "Which of the following sentences uses an adverb correctly?",
+        options: [
+            "He sings beautiful.",
+            "She speaks slow.",
+            "They ran quickly.",
+            "The cat is very soft."
+        ],
+        correctAnswer: "They ran quickly."
+    },
+    {
+        question: "Select the correct sentence structure:",
+        options: [
+            "I will going to the party.",
+            "I will go to the party.",
+            "I going to the party.",
+            "I go will to the party."
+        ],
+        correctAnswer: "I will go to the party."
+    },
+    {
+        question: "Which of the following is a correctly punctuated sentence?",
+        options: [
+            "I like ice cream, I eat it every day.",
+            "I like ice cream. I eat it every day.",
+            "I like ice cream I eat it every day.",
+            "I like ice cream; I eat it every day."
+        ],
+        correctAnswer: "I like ice cream. I eat it every day."
+    },
+    {
+        question: "Which sentence contains a preposition?",
+        options: [
+            "She runs fast.",
+            "The cat on the table.",
+            "He sings beautifully.",
+            "They are happy."
+        ],
+        correctAnswer: "The cat on the table."
     }
 ];
+
 
 let currentQuestionIndex = 0;
 let selectedOption = '';
