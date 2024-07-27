@@ -87,3 +87,44 @@ button:hover {
     background-color: #c70039;
 }
 
+.footer {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+.fade-in {
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.slide-in {
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@media (max-width: 600px) {
+    #question {
+        font-size: 16px;
+    }
+
+    #options li {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    #review-list li {
+        font-size: 12px;
+    }
+}

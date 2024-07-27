@@ -22,16 +22,19 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-color: #fff;
+            max-width: 500px;
+            width: 100%;
         }
 
         h1 {
             margin-bottom: 20px;
             color: #333;
+            font-size: 24px;
         }
 
         .button {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 12px 24px;
             margin: 10px;
             border: none;
             border-radius: 5px;
@@ -40,7 +43,7 @@
             color: #fff;
             background-color: #007bff;
             text-decoration: none;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
         .button:hover {
@@ -49,26 +52,42 @@
 
         .button:active {
             background-color: #004080;
+            transform: scale(0.98);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Quiz Completed</h1>
-        <button class="button" onclick="viewScore()">View Score</button>
-        <button class="button" onclick="share()">Share Quiz</button>
-
+        <h1>Share Your Results</h1>
+        <button class="button" onclick="shareOnFacebook()">Share on Facebook</button>
+        <button class="button" onclick="shareOnWhatsApp()">Share on WhatsApp</button>
     </div>
 
     <script>
-        function viewScore() {
-            alert("Your score is: " + localStorage.getItem('quizScore')); // Use the stored score
+        function shareOnFacebook() {
+            const score = localStorage.getItem('quizScore');
+            const url = `https://www.facebook.com/sharer/sharer.php?u=https://yourwebsite.com&quote=I scored ${score} in the quiz!`;
+            window.open(url, '_blank');
         }
 
-       function share() {
-            window.location.href = 'share.html'; // Redirect to Log In page
+        function shareOnWhatsApp() {
+            const score = localStorage.getItem('quizScore');
+            const text = encodeURIComponent(`I scored ${score} in the quiz! Check it out: https://ar813.github.io/typescript-quiz/`);
+            const url = `https://api.whatsapp.com/send?text=${text}`;
+            window.open(url, '_blank');
         }
-
     </script>
 </body>
 </html>

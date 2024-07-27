@@ -1,4 +1,4 @@
-const questions = [
+const allQuestions = [
     {
         question: "Which of the following is a correct sentence?",
         options: [
@@ -98,18 +98,139 @@ const questions = [
             "They are happy."
         ],
         correctAnswer: "The cat on the table."
+    },
+    {
+        question: "Choose the correct article: 'This is _____ apple.'",
+        options: [
+            "a",
+            "an",
+            "the",
+            "no article"
+        ],
+        correctAnswer: "an"
+    },
+    {
+        question: "Identify the correct sentence:",
+        options: [
+            "He don't has any money.",
+            "He doesn't have any money.",
+            "He doesn't has any money.",
+            "He don't have any money."
+        ],
+        correctAnswer: "He doesn't have any money."
+    },
+    {
+        question: "Which sentence is in the future tense?",
+        options: [
+            "I will go to the market tomorrow.",
+            "I went to the market yesterday.",
+            "I am going to the market now.",
+            "I go to the market every day."
+        ],
+        correctAnswer: "I will go to the market tomorrow."
+    },
+    {
+        question: "Which of the following sentences is correct?",
+        options: [
+            "She can sings very well.",
+            "She can sing very well.",
+            "She can singing very well.",
+            "She can to sing very well."
+        ],
+        correctAnswer: "She can sing very well."
+    },
+    {
+        question: "What is the plural form of 'child'?",
+        options: [
+            "Childs",
+            "Childes",
+            "Children",
+            "Childrens"
+        ],
+        correctAnswer: "Children"
+    },
+    {
+        question: "Choose the correct form of the verb: 'They _____ finished their homework.'",
+        options: [
+            "have",
+            "has",
+            "having",
+            "had"
+        ],
+        correctAnswer: "have"
+    },
+    {
+        question: "Which of the following is a correct sentence?",
+        options: [
+            "She not is at home.",
+            "She is not at home.",
+            "She is not home.",
+            "She not at home."
+        ],
+        correctAnswer: "She is not at home."
+    },
+    {
+        question: "Identify the correct sentence:",
+        options: [
+            "Do you knows the answer?",
+            "Do you know the answer?",
+            "Does you know the answer?",
+            "Does you knows the answer?"
+        ],
+        correctAnswer: "Do you know the answer?"
+    },
+    {
+        question: "Which sentence uses an adjective correctly?",
+        options: [
+            "She is a very beauty girl.",
+            "She is a very beautiful girl.",
+            "She is a very beautifully girl.",
+            "She is a very beautify girl."
+        ],
+        correctAnswer: "She is a very beautiful girl."
+    },
+    {
+        question: "What is the correct past tense of 'eat'?",
+        options: [
+            "Ate",
+            "Eaten",
+            "Eat",
+            "Eating"
+        ],
+        correctAnswer: "Ate"
     }
 ];
 
+
+let questions = [];
+const numberOfQuestions = 10; // Set how many questions to show in the quiz
+
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+// Shuffle all questions and select the first 'numberOfQuestions'
+shuffle(allQuestions);
+questions = allQuestions.slice(0, numberOfQuestions);
 
 let currentQuestionIndex = 0;
 let selectedOption = '';
 let score = 0;
 let timer;
-let timeLeft = 30; // Set the total quiz time in seconds (e.g., 300 seconds = 5 minutes)
+let timeLeft = 120; // Set the total quiz time in seconds (e.g., 300 seconds = 5 minutes)
 let userAnswers = [];
 
 function loadQuestion() {
+    const questionElement = document.getElementById('question');
+    questionElement.classList.add('fade-in');
+    setTimeout(() => questionElement.classList.remove('fade-in'), 1000);
+
+    document.getElementById('options').classList.add('slide-in');
+    setTimeout(() => document.getElementById('options').classList.remove('slide-in'), 500);
+
     const currentQuestion = questions[currentQuestionIndex];
     document.getElementById('question').textContent = currentQuestion.question;
     const optionsElement = document.getElementById('options');
@@ -132,7 +253,11 @@ function loadQuestion() {
     updateScore();
 }
 
+let answerSubmitted = false; // New variable to track if answer has been submitted
+
 function selectOption(option) {
+    if (answerSubmitted) return; // Prevent selection if the answer has already been submitted
+
     selectedOption = option;
     const items = document.getElementById('options').getElementsByTagName('li');
     for (let item of items) {
@@ -143,6 +268,8 @@ function selectOption(option) {
 }
 
 function checkAnswer() {
+    if (answerSubmitted) return; // Prevent checking answer if it has already been submitted
+
     const resultElement = document.getElementById('result');
     const currentQuestion = questions[currentQuestionIndex];
     if (selectedOption === currentQuestion.correctAnswer) {
@@ -160,6 +287,8 @@ function checkAnswer() {
     });
     updateScore();
 
+    answerSubmitted = true; // Mark the answer as submitted
+
     // Disable the Submit button after submission
     document.getElementById('submit').disabled = true;
     // Enable the Next Question button after answer is checked
@@ -170,12 +299,14 @@ function nextQuestion() {
     if (currentQuestionIndex < questions.length - 1) {
         currentQuestionIndex++;
         loadQuestion();
+        answerSubmitted = false; // Reset the answer submitted flag for the next question
     } else {
         finishQuiz();
     }
     // Disable the Next Question button
     document.getElementById('next').disabled = true;
 }
+
 
 function startTimer() {
     timer = setInterval(() => {
@@ -191,12 +322,14 @@ function startTimer() {
 function finishQuiz() {
     localStorage.setItem('quizScore', score); // Store the score in localStorage
     if (timeLeft === 0) {
-        alert("Time is up")
+        alert("Time is up");
         window.location.href = 'final.html'; // Redirect to the final page
     } else {
         window.location.href = 'final.html'; // Redirect to the final page
     }
 }
+
+
 
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
@@ -207,6 +340,7 @@ function formatTime(seconds) {
 function updateScore() {
     document.getElementById('current-score').textContent = score;
 }
+
 
 window.onload = function () {
     loadQuestion();

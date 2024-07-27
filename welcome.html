@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +20,7 @@
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 300px;
             text-align: center;
         }
@@ -47,13 +48,16 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Welcome</h1>
         <p>Welcome to the quiz application!</p>
         <a href="quiz.html"><button onclick="startQuiz()">Start Quiz</button></a>
         <button onclick="logOut()">Log Out</button>
+
     </div>
+    
     <script>
         function startQuiz() {
             window.location.href = 'quiz.html'; // Redirect to Quiz page
@@ -63,6 +67,8 @@
             localStorage.removeItem('user');
             window.location.href = 'log-in.html'; // Redirect to Log In page
         }
+
     </script>
 </body>
+
 </html>
