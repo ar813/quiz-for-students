@@ -321,6 +321,7 @@ function startTimer() {
 
 function finishQuiz() {
     localStorage.setItem('quizScore', score); // Store the score in localStorage
+    localStorage.setItem('userAnswers', JSON.stringify(userAnswers)); // Store user answers in localStorage
     if (timeLeft === 0) {
         alert("Time is up");
         window.location.href = 'final.html'; // Redirect to the final page
@@ -328,8 +329,6 @@ function finishQuiz() {
         window.location.href = 'final.html'; // Redirect to the final page
     }
 }
-
-
 
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);

@@ -84,7 +84,7 @@
 
         function shareOnWhatsApp() {
             const score = localStorage.getItem('quizScore');
-            const text = encodeURIComponent(`I scored ${score} in the quiz! Check it out: https://ar813.github.io/typescript-quiz/`);
+            const text = encodeURIComponent(`I scored ${score} in the quiz! Check it out: https://ar813.github.io/quiz-for-students/`);
             const url = `https://api.whatsapp.com/send?text=${text}`;
             window.open(url, '_blank');
         }

@@ -55,20 +55,54 @@
 <body>
     <div class="container">
         <h1>Quiz Completed</h1>
-        <button class="button" onclick="viewScore()">View Score</button>
+        <button class="button" onclick="viewScore()">User Information</button>
         <button class="button" onclick="share()">Share Quiz</button>
-
+        <button class="button" onclick="generatePDF()">Result</button>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
         function viewScore() {
-            alert("Your score is: " + localStorage.getItem('quizScore')); // Use the stored score
+            window.location.href = 'user-info.html'; // Redirect to user-info.html
         }
 
-       function share() {
-            window.location.href = 'share.html'; // Redirect to Log In page
+        function share() {
+            window.location.href = 'share.html'; // Redirect to share.html
         }
 
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Add title
+            doc.setFontSize(18);
+            doc.text('Quiz Results', 105, 20, null, null, 'center');
+
+            // Add user information
+            const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+            if (userInfo) {
+                doc.setFontSize(14);
+                doc.text(`Name: ${userInfo.name}`, 20, 40);
+                doc.text(`Father Name: ${userInfo.fatherName}`, 20, 50);
+                doc.text(`Date of Birth: ${userInfo.dob}`, 20, 60);
+            }
+
+            // Add score
+            const score = localStorage.getItem('quizScore'); // Retrieve the stored score
+            doc.setFontSize(14);
+            doc.text(`Score: ${score}`, 20, 80);
+
+            // Add user answers without correct answers
+            const userAnswers = JSON.parse(localStorage.getItem('userAnswers'));
+            userAnswers.forEach((answer, index) => {
+                doc.setFontSize(12);
+                doc.text(`${index + 1}. ${answer.question}`, 20, 100 + index * 20);
+                doc.text(`Your answer: ${answer.selected}`, 20, 110 + index * 20);
+            });
+
+            // Save the PDF
+            doc.save('quiz_results.pdf');
+        }
     </script>
 </body>
 </html>
