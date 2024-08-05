@@ -130,19 +130,27 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
-        function generatePDF() {
+       function generatePDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
+    const margin = 20;
+    const pageHeight = doc.internal.pageSize.height;
+    const pageWidth = doc.internal.pageSize.width;
+
+    // Function to add watermark
+    function addWatermark() {
+        doc.setTextColor(200, 200, 200);
+        doc.setFontSize(30);
+        doc.text('Muhammad Arsalan Khan', pageWidth / 2, pageHeight / 2, { align: 'center', angle: 45 });
+    }
 
     // Header
     doc.setFontSize(18);
     doc.setFont("Arial", "bold");
-    doc.text('Quiz Results', 105, 20, null, null, 'center');
+    doc.text('Quiz Results', pageWidth / 2, margin, { align: 'center' });
     
-    // Watermark
-    doc.setTextColor(200, 200, 200);
-    doc.setFontSize(50);
-    doc.text('Quiz', 105, 150, null, null, 'center');
+    // Add watermark to the first page
+    addWatermark();
     
     // User Information
     doc.setTextColor(0, 0, 0);
@@ -150,14 +158,14 @@
     doc.setFont("Arial", "bold");
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
     if (userInfo) {
-        doc.text(`Name: ${userInfo.name}`, 20, 40);
-        doc.text(`Father Name: ${userInfo.fatherName}`, 20, 50);
+        doc.text(`Name: ${userInfo.name}`, margin, 40);
+        doc.text(`Father Name: ${userInfo.fatherName}`, margin, 50);
     }
     
     // Score
     doc.setFontSize(16);
     doc.setFont("Arial", "bold");
-    doc.text(`Score: ${localStorage.getItem('quizScore')}`, 20, 70);
+    doc.text(`Score: ${localStorage.getItem('quizScore')}`, margin, 70);
     
     // Questions and Answers
     const userAnswers = JSON.parse(localStorage.getItem('userAnswers'));
@@ -165,36 +173,41 @@
     userAnswers.forEach((answer, index) => {
         doc.setFontSize(12);
         doc.setFont("Arial", "normal");
-        doc.text(`Q${index + 1}: ${answer.question}`, 20, yOffset);
+        doc.text(`Q${index + 1}: ${answer.question}`, margin, yOffset);
         yOffset += 10;
         
-        doc.text(`Your answer: ${answer.selected}`, 20, yOffset);
+        doc.text(`Your answer: ${answer.selected}`, margin, yOffset);
         yOffset += 10;
         
         // Correct Answer Highlighted in Green
         if (answer.selected === answer.correct) {
             doc.setTextColor(0, 128, 0); // Green color
-            doc.text(`Are you correct: ${answer.correct}`, 20, yOffset);
+            doc.text(`Are you correct: ${answer.correct}`, margin, yOffset);
         } else {
-            doc.setTextColor(0, 0, 0); // Reset to black
-            doc.text(`Are you correct: ${answer.correct}`, 20, yOffset);
+            doc.setTextColor(255, 0, 0); // Red color for incorrect
+            doc.text(`Are you correct: ${answer.correct?"Yes":"No"}`, margin, yOffset);
         }
+        doc.setTextColor(0, 0, 0); // Reset to black
         yOffset += 20;
         
-        if (yOffset > 250) { // Page break
+        if (yOffset > pageHeight - margin * 2) { // Page break
             doc.addPage();
-            yOffset = 20;
+            yOffset = margin;
+            // Add watermark to new page
+            addWatermark();
         }
     });
     
     // Footer
     doc.setFontSize(10);
     doc.setFont("Arial", "italic");
-    doc.text(`Page ${doc.internal.getNumberOfPages()}`, 190, 290, null, null, 'right');
+    doc.text(`Page ${doc.internal.getNumberOfPages()}`, pageWidth - margin, pageHeight - margin, { align: 'right' });
     
     // Save the PDF
     doc.save('quiz_results.pdf');
 }
+
+
 
     </script>
 </body>
