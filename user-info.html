@@ -14,6 +14,7 @@
             height: 100vh;
             margin: 0;
             background-color: #f4f4f9;
+            padding: 10px;
         }
 
         .container {
@@ -22,42 +23,85 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-color: #fff;
+            max-width: 100%;
+            width: 400px;
+            box-sizing: border-box;
         }
 
         h1 {
             margin-bottom: 20px;
             color: #333;
+            font-size: 24px;
+            line-height: 1.2;
         }
 
         input {
             display: block;
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
+            padding: 12px;
+            margin: 10px 0;
             border-radius: 5px;
             border: 1px solid #ccc;
+            font-size: 16px;
+            box-sizing: border-box;
         }
 
         .button {
             display: inline-block;
-            padding: 10px 20px;
-            margin: 10px;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
             color: #fff;
             background-color: #007bff;
+            text-align: center;
             text-decoration: none;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-sizing: border-box;
         }
 
         .button:hover {
             background-color: #0056b3;
+            transform: translateY(-2px);
         }
 
         .button:active {
             background-color: #004080;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            input, .button {
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            input, .button {
+                font-size: 14px;
+                padding: 10px;
+            }
         }
     </style>
 </head>
@@ -66,7 +110,6 @@
         <h1>User Information</h1>
         <input type="text" id="name" placeholder="Name" required>
         <input type="text" id="fatherName" placeholder="Father Name" required>
-        <input type="date" id="dob" placeholder="Date of Birth" required>
         <button class="button" onclick="saveInformation()">Save Information</button>
     </div>
 
@@ -74,14 +117,13 @@
         function saveInformation() {
             const name = document.getElementById('name').value;
             const fatherName = document.getElementById('fatherName').value;
-            const dob = document.getElementById('dob').value;
 
-            if (!name || !fatherName || !dob) {
+            if (!name || !fatherName) {
                 alert("Please fill out all fields.");
                 return;
             }
 
-            const userInfo = { name, fatherName, dob };
+            const userInfo = { name, fatherName};
             localStorage.setItem('userInfo', JSON.stringify(userInfo)); // Save user info to localStorage
 
             window.location.href = 'final.html'; // Redirect back to final.html

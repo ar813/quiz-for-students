@@ -20,12 +20,18 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            width: 300px;
+            width: 90%;
+            max-width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
             text-align: center;
+            box-sizing: border-box;
         }
 
         h1 {
             margin-bottom: 20px;
+            font-size: 24px;
+            color: #007bff; /* Blue color for heading */
         }
 
         form {
@@ -35,6 +41,8 @@
 
         label {
             margin: 5px 0;
+            font-size: 16px;
+            color: #333;
         }
 
         input {
@@ -42,6 +50,7 @@
             margin: 5px 0 20px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            font-size: 16px;
         }
 
         button {
@@ -51,15 +60,23 @@
             padding: 10px;
             border-radius: 4px;
             cursor: pointer;
-            margin: 5px;
+            margin: 5px 0;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
         button:hover {
             background-color: #0056b3;
         }
 
+        button:active {
+            background-color: #004080;
+            transform: translateY(1px);
+        }
+
         p {
             margin-top: 10px;
+            font-size: 16px;
         }
 
         .link {
@@ -69,6 +86,44 @@
 
         .link:hover {
             text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                max-width: 90%;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            label, input, button, p {
+                font-size: 14px;
+            }
+
+            input, button {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+                max-width: 95%;
+            }
+
+            h1 {
+                font-size: 18px;
+            }
+
+            label, input, button, p {
+                font-size: 12px;
+            }
+
+            input, button {
+                padding: 8px;
+            }
         }
     </style>
 </head>

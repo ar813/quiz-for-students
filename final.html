@@ -13,7 +13,8 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #f4f4f9;
+            background-color: #f0f2f5;
+            padding: 0 10px;
         }
 
         .container {
@@ -22,87 +23,179 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-color: #fff;
+            max-width: 100%;
+            width: 360px;
         }
 
         h1 {
             margin-bottom: 20px;
             color: #333;
+            font-size: 24px;
+            line-height: 1.2;
         }
 
         .button {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 10px;
+            display: block;
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin: 10px auto;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
             color: #fff;
             background-color: #007bff;
+            text-align: center;
             text-decoration: none;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-sizing: border-box;
         }
 
         .button:hover {
             background-color: #0056b3;
+            transform: translateY(-2px);
         }
 
         .button:active {
             background-color: #004080;
+            transform: translateY(0);
+        }
+
+        .pdf-button {
+            display: block;
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin: 10px auto;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #fff;
+            background-color: #28a745;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .pdf-button:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        .pdf-button:active {
+            background-color: #1e7e34;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            .button, .pdf-button {
+                font-size: 15px;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .button, .pdf-button {
+                font-size: 14px;
+                padding: 8px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Quiz Completed</h1>
-        <button class="button" onclick="viewScore()">User Information</button>
-        <button class="button" onclick="share()">Share Quiz</button>
-        <button class="button" onclick="generatePDF()">Result</button>
+        <a href="user-info.html" class="button">User Information</a>
+        <a href="share.html" class="button">Share Quiz</a>
+        <button onclick="generatePDF()" class="pdf-button">Download Result PDF</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
-        function viewScore() {
-            window.location.href = 'user-info.html'; // Redirect to user-info.html
-        }
-
-        function share() {
-            window.location.href = 'share.html'; // Redirect to share.html
-        }
-
         function generatePDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-            // Add title
-            doc.setFontSize(18);
-            doc.text('Quiz Results', 105, 20, null, null, 'center');
-
-            // Add user information
-            const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-            if (userInfo) {
-                doc.setFontSize(14);
-                doc.text(`Name: ${userInfo.name}`, 20, 40);
-                doc.text(`Father Name: ${userInfo.fatherName}`, 20, 50);
-                doc.text(`Date of Birth: ${userInfo.dob}`, 20, 60);
-            }
-
-            // Add score
-            const score = localStorage.getItem('quizScore'); // Retrieve the stored score
-            doc.setFontSize(14);
-            doc.text(`Score: ${score}`, 20, 80);
-
-            // Add user answers without correct answers
-            const userAnswers = JSON.parse(localStorage.getItem('userAnswers'));
-            userAnswers.forEach((answer, index) => {
-                doc.setFontSize(12);
-                doc.text(`${index + 1}. ${answer.question}`, 20, 100 + index * 20);
-                doc.text(`Your answer: ${answer.selected}`, 20, 110 + index * 20);
-            });
-
-            // Save the PDF
-            doc.save('quiz_results.pdf');
+    // Header
+    doc.setFontSize(18);
+    doc.setFont("Arial", "bold");
+    doc.text('Quiz Results', 105, 20, null, null, 'center');
+    
+    // Watermark
+    doc.setTextColor(200, 200, 200);
+    doc.setFontSize(50);
+    doc.text('Quiz', 105, 150, null, null, 'center');
+    
+    // User Information
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(14);
+    doc.setFont("Arial", "bold");
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    if (userInfo) {
+        doc.text(`Name: ${userInfo.name}`, 20, 40);
+        doc.text(`Father Name: ${userInfo.fatherName}`, 20, 50);
+    }
+    
+    // Score
+    doc.setFontSize(16);
+    doc.setFont("Arial", "bold");
+    doc.text(`Score: ${localStorage.getItem('quizScore')}`, 20, 70);
+    
+    // Questions and Answers
+    const userAnswers = JSON.parse(localStorage.getItem('userAnswers'));
+    let yOffset = 90;
+    userAnswers.forEach((answer, index) => {
+        doc.setFontSize(12);
+        doc.setFont("Arial", "normal");
+        doc.text(`Q${index + 1}: ${answer.question}`, 20, yOffset);
+        yOffset += 10;
+        
+        doc.text(`Your answer: ${answer.selected}`, 20, yOffset);
+        yOffset += 10;
+        
+        // Correct Answer Highlighted in Green
+        if (answer.selected === answer.correct) {
+            doc.setTextColor(0, 128, 0); // Green color
+            doc.text(`Are you correct: ${answer.correct}`, 20, yOffset);
+        } else {
+            doc.setTextColor(0, 0, 0); // Reset to black
+            doc.text(`Are you correct: ${answer.correct}`, 20, yOffset);
         }
+        yOffset += 20;
+        
+        if (yOffset > 250) { // Page break
+            doc.addPage();
+            yOffset = 20;
+        }
+    });
+    
+    // Footer
+    doc.setFontSize(10);
+    doc.setFont("Arial", "italic");
+    doc.text(`Page ${doc.internal.getNumberOfPages()}`, 190, 290, null, null, 'right');
+    
+    // Save the PDF
+    doc.save('quiz_results.pdf');
+}
+
     </script>
 </body>
 </html>
