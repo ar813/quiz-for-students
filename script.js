@@ -65,7 +65,7 @@ const allQuestions = [
             "He sings beautiful.",
             "She speaks slow.",
             "They ran quickly.",
-            "The cat is very soft."
+            "The cat is soft."
         ],
         correctAnswer: "They ran quickly."
     },
@@ -108,16 +108,6 @@ const allQuestions = [
             "no article"
         ],
         correctAnswer: "an"
-    },
-    {
-        question: "Identify the correct sentence:",
-        options: [
-            "He don't has any money.",
-            "He doesn't have any money.",
-            "He doesn't has any money.",
-            "He don't have any money."
-        ],
-        correctAnswer: "He doesn't have any money."
     },
     {
         question: "Which sentence is in the future tense?",
@@ -200,7 +190,6 @@ const allQuestions = [
         correctAnswer: "Ate"
     }
 ];
-
 
 let questions = [];
 const numberOfQuestions = 10; // Set how many questions to show in the quiz
@@ -345,3 +334,12 @@ window.onload = function () {
     loadQuestion();
     startTimer();
 };
+
+
+// Function to save all questions to local storage (or another method to share between files)
+localStorage.setItem('allQuestions', JSON.stringify(allQuestions));
+
+// Function to save user answers to local storage after the quiz is completed
+function saveUserAnswers(userAnswers) {
+    localStorage.setItem('userAnswers', JSON.stringify(userAnswers));
+}
